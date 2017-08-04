@@ -22,12 +22,77 @@ body {
     background-attachment: fixed;
 }
 
+body>div, body>div>div {
+    height: 100%;
+}
+
 *, *::before, *::after {
     box-sizing: border-box;
 }
 
+.sidebar-left {
+    height: 100%;
+    background-color: rgba(34,45,71,.5);
+    padding: 0px;
+}
+
+.contacter-header {
+    height:70px;
+    width:100%;
+    background-color: rgba(43,45,47,.8);
+    display: table;
+}
+.contacter-header p {
+    display: table-cell;
+    color: white;
+    font-size: 40px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.contacter > li {
+    padding: 10px 10px 10px 10px;
+    border-width: thin;
+    border-style: solid;
+    border-color: transparent;
+    border-bottom-color: rgba(125,136,156,.3);
+}
+
+.contacter-sel:hover {
+    background-color: rgba(218,229,234,.1);
+}
+
+.contacter > .current {
+    background-color: rgba(46,206,255,.3); 
+}
+
+.contacter > .current:hover {
+    background-color: rgba(46,206,255,.3);
+}
+
+td > img {
+    box-shadow: 0px 0px 5px #FEFEFE;
+}
+
+.name {
+    color: white;
+}
+
+.last-msg {
+    color: gray;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow:hidden; 
+}
+
+.chat-panel {
+    height: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
 .chat-container {
-    height: calc(100% - 50px);
+    height: calc(100% - 50px - 70px);
     padding-bottom: 10px;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
@@ -156,6 +221,7 @@ body {
     border-radius: 5px;
     max-height: 50%;
     max-width: 100%;
+    cursor: pointer;
 }
 
 img {
@@ -164,7 +230,6 @@ img {
     max-height: 100%;
     margin-top: auto;
     margin-bottom: auto;
-    cursor: pointer;
 }
 
 /* 透明背景边框，不能使用opacity，会影响子元素一起模糊 */
@@ -313,6 +378,27 @@ img {
 </style>
 <script>
     $(document).ready(function(){
+        if (navigator.userAgent.match(/(iPod|iPhone|iPad|Android)/)) 
+        {
+            $('.contacter > .current').removeClass(); 
+            $('.contacter').on('click', function() {
+                $('.sidebar-left').addClass('hidden-xs');
+                $('.chat-panel').removeClass('hidden-xs');
+
+                setScrollTop($('.chat-container'));
+                $('.message-input').focus();
+            });
+
+            $('.glyphicon-chevron-left').on('click', function() {
+                $('.sidebar-left').removeClass('hidden-xs');
+                $('.chat-panel').addClass('hidden-xs');
+            });
+        }
+        else
+        {
+            $('.contacter > li').addClass('contacter-sel');
+        }
+        
         $('.message-input').on('keypress',function(event){
             if(event.keyCode == "13")   
             {
@@ -409,157 +495,208 @@ img {
             </div>
             <div class="image-panel-inner"><div class="image-panel-inner-cell"></div></div>
         </div>
-        <div class="container-fluid chat-container">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-9 col-md-5 sender no-padding-left">
-                        <div class="header-container header-sender">
-                            <img src="images/sender.jpg"/></img>
-                        </div>
-                        <div class="content-container no-padding-left">
-                            <p class="content-header">Victor at 05:30 pm</p>
-                            <div class="glass-filter">
-                                <p class="content-body">hello!</p> 
-                            </div>
-                        </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-9 col-md-5 sender no-padding-left">
-                        <div class="header-container header-sender">
-                            <img src="images/sender.jpg"/></img>
-                        </div>
-                        <div class="content-container no-padding-left">
-                            <p class="content-header">Victor at 05:30 pm</p>
-                            <div class="glass-filter">
-                                <p class="content-body">Welcome to WordPress. This is your first post. Edit or delete it, then start writing!!Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p> 
-                            </div>
-                        </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-9 col-md-5 sender no-padding-left">
-                        <div class="header-container header-sender">
-                            <img src="images/sender.jpg"/></img>
-                        </div>
-                        <div class="content-container no-padding-left">
-                            <p class="content-header">Victor at 05:30 pm</p>
-                            <div class="glass-filter">
-                                <p class="content-body">Welcome to WordPress. This is your first post. Edit or delete it, then start writing!!Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p> 
-                            </div>
-                        </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-9 col-md-5 receiver no-padding-left">
-                        <div class="header-container header-receiver">
-                            <img src="images/receiver.jpg"/></img>
-                        </div>
-                        <div class="content-container no-padding-left">
-                            <p class="content-header">Victor at 05:30 pm</p>
-                            <div class="glass-filter">
-                                <p class="content-body">Welcome to WordPress. This is your first post. Edit or delete it, then start writing!!Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p> 
-                            </div>
-                        </div>
-                </div>
-            </div> 
-             <div class="row">
-                <div class="col-xs-9 col-md-5 receiver no-padding-left">
-                        <div class="header-container header-receiver">
-                            <img src="images/receiver.jpg"/></img>
-                        </div>
-                        <div class="content-container no-padding-left">
-                            <p class="content-header">Victor at 05:30 pm</p>
-                            <div class="glass-filter">
-                                <p class="content-body">Welcome to WordPress. This is your first post. Edit or delete it, then start writing!!Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p> 
-                            </div>
-                        </div>
-                </div>
-            </div>
-             <div class="row">
-                <div class="col-xs-9 col-md-5 receiver no-padding-left">
-                        <div class="header-container header-receiver">
-                            <img src="images/receiver.jpg"/></img>
-                        </div>
-                        <div class="content-container no-padding-left">
-                            <p class="content-header">Victor at 05:30 pm</p>
-                            <div class="glass-filter">
-                                <p class="content-body">Welcome to WordPress. This is your first post. Edit or delete it, then start writing!!Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p> 
-                            </div>
-                        </div>
-                </div>
-            </div>
-             <div class="row">
-                <div class="col-xs-9 col-md-5 receiver no-padding-left">
-                        <div class="header-container header-receiver">
-                            <img src="images/receiver.jpg"/></img>
-                        </div>
-                        <div class="content-container no-padding-left">
-                            <p class="content-header">Victor at 05:30 pm</p>
-                            <div class="glass-filter">
-                                <p class="content-body">Welcome to WordPress. This is your first post. Edit or delete it, then start writing!!Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p> 
-                            </div>
-                        </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-9 col-md-5 receiver no-padding-left">
-                    <div class="header-container header-receiver">
-                        <img src="images/receiver.jpg"/></img>
+                <div class="col-lg-3 col-xs-12 sidebar-left">
+                    <div class="contacter-header">
+                        <p>
+                        <span style="float:left;padding:10px" class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                        Chats
+                        <span style="visibility:hidden;float:right;padding:10px" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </p>
                     </div>
-                    <div class="content-container no-padding-left">
-                        <p class="content-header">Victor at 05:30 pm</p>
-                            <div class="glass-filter">
-                                <p class="content-body">Welcome to WordPress. This is your first post. Edit or delete it, then start writing!!Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p> 
-                                <div class="content-img">
-                                     <img src="images/receiver.jpg" />
+                    <div style="padding-left:0px;padding-right:0px" class="container-fluid">
+                    <ul class="list-unstyled contacter">
+                        <li class="current">
+                            <table style="width:100%;table-layout:fixed">
+                                <tr>
+                                    <td rowspan="2" width="60px">
+                                        <img style="height:50px;width:50px" class="img-circle" src="images/sender.jpg"/></img>
+                                    </td>
+                                    <td><div class="name">楼上</div></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="last-msg">Welcome to WordPress. This is your first post. Edit or delete it, then start writing!!Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</div></td>
+                                </tr>
+                            </table>
+                        </li>
+                        <li>
+                            <table style="width:100%;table-layout:fixed">
+                                <tr>
+                                    <td rowspan="2" width="60px">
+                                        <img style="height:50px;width:50px" class="img-circle" src="images/receiver.jpg"/></img>
+                                    </td>
+                                    <td><div class="name">楼下</div></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="last-msg">Welcome to WordPress. This is your first post. Edit or delete it, then start writing!!Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</div></td>
+                                </tr>
+                            </table>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-xs-12 hidden-xs chat-panel">
+                    <div class="contacter-header">
+                        <p>
+                        <span style="float:left;padding:10px" class="glyphicon glyphicon-chevron-left hidden-lg"></span>
+                        楼上
+                        <span style="float:right;padding:10px" class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span></p>
+                    </div>
+                    <div class="container-fluid chat-container">
+                        <div class="row">
+                            <div class="col-xs-9 col-md-5 sender no-padding-left">
+                                <div class="header-container header-sender">
+                                    <img src="images/sender.jpg"/></img>
                                 </div>
-                                <p class="content-body">Welcome to WordPress. This is your first post. Edit or delete it, then start writing!!Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p>
+                                <div class="content-container no-padding-left">
+                                    <p class="content-header">Victor at 05:30 pm</p>
+                                    <div class="glass-filter">
+                                        <p class="content-body">hello!</p> 
+                                    </div>
+                                </div>
                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-9 col-md-5 sender no-padding-left">
+                                <div class="header-container header-sender">
+                                    <img src="images/sender.jpg"/></img>
+                                </div>
+                                <div class="content-container no-padding-left">
+                                    <p class="content-header">Victor at 05:30 pm</p>
+                                    <div class="glass-filter">
+                                        <p class="content-body">Welcome to WordPress. This is your first post. Edit or delete it, then start writing!!Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-9 col-md-5 sender no-padding-left">
+                                <div class="header-container header-sender">
+                                    <img src="images/sender.jpg"/></img>
+                                </div>
+                                <div class="content-container no-padding-left">
+                                    <p class="content-header">Victor at 05:30 pm</p>
+                                    <div class="glass-filter">
+                                        <p class="content-body">Welcome to WordPress. This is your first post. Edit or delete it, then start writing!!Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-9 col-md-5 receiver no-padding-left">
+                                <div class="header-container header-receiver">
+                                    <img src="images/receiver.jpg"/></img>
+                                </div>
+                                <div class="content-container no-padding-left">
+                                    <p class="content-header">Victor at 05:30 pm</p>
+                                    <div class="glass-filter">
+                                        <p class="content-body">Welcome to WordPress. This is your first post. Edit or delete it, then start writing!!Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-xs-9 col-md-5 receiver no-padding-left">
+                                <div class="header-container header-receiver">
+                                    <img src="images/receiver.jpg"/></img>
+                                </div>
+                                <div class="content-container no-padding-left">
+                                    <p class="content-header">Victor at 05:30 pm</p>
+                                    <div class="glass-filter">
+                                        <p class="content-body">Welcome to WordPress. This is your first post. Edit or delete it, then start writing!!Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-9 col-md-5 receiver no-padding-left">
+                                <div class="header-container header-receiver">
+                                    <img src="images/receiver.jpg"/></img>
+                                </div>
+                                <div class="content-container no-padding-left">
+                                    <p class="content-header">Victor at 05:30 pm</p>
+                                    <div class="glass-filter">
+                                        <p class="content-body">Welcome to WordPress. This is your first post. Edit or delete it, then start writing!!Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-9 col-md-5 receiver no-padding-left">
+                                <div class="header-container header-receiver">
+                                    <img src="images/receiver.jpg"/></img>
+                                </div>
+                                <div class="content-container no-padding-left">
+                                    <p class="content-header">Victor at 05:30 pm</p>
+                                    <div class="glass-filter">
+                                        <p class="content-body">Welcome to WordPress. This is your first post. Edit or delete it, then start writing!!Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-9 col-md-5 receiver no-padding-left">
+                                <div class="header-container header-receiver">
+                                    <img src="images/receiver.jpg"/></img>
+                                </div>
+                                <div class="content-container no-padding-left">
+                                    <p class="content-header">Victor at 05:30 pm</p>
+                                    <div class="glass-filter">
+                                        <p class="content-body">Welcome to WordPress. This is your first post. Edit or delete it, then start writing!!Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p> 
+                                        <div class="content-img">
+                                            <img src="images/receiver.jpg" />
+                                        </div>
+                                        <p class="content-body">Welcome to WordPress. This is your first post. Edit or delete it, then start writing!!Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-9 col-md-5 receiver no-padding-left">
+                                <div class="header-container header-receiver">
+                                    <img src="images/receiver.jpg"/></img>
+                                </div>
+                                <div class="content-container no-padding-left">
+                                    <p class="content-header">Victor at 05:30 pm</p>
+                                    <div class="glass-filter">
+                                        <p class="content-body">Welcome to WordPress. This is your first post. Edit or delete it, then start writing!!Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-9 col-md-5 receiver no-padding-left">
+                                <div class="header-container header-receiver">
+                                    <img src="images/receiver.jpg"/></img>
+                                </div>
+                                <div class="content-container no-padding-left">
+                                    <p class="content-header">Victor at 05:30 pm</p>
+                                    <div class="glass-filter">
+                                        <p class="content-body">hello!</p> 
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+
+                    </div>
+                    <div class="container-fluid message-container glass-filter">
+                        <div class="row">
+                            <div class="col-lg-12 no-padding-right">
+                                <div class="message-input-group">
+                                    <span class="message-group-addon">
+                                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                    </span>
+                                    <input type="text" class="message-input" placeholder="Enter your message here...">
+                                    <span class="message-group-addon">
+                                        <!--button class="message-btn" type="button">Send</button-->
+                                        <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+                                    </span>
+                                </div><!-- /input-group -->
+                            </div><!-- /.col-lg-6 -->
+                        </div>
                     </div>
                 </div>
-            </div>
-             <div class="row">
-                <div class="col-xs-9 col-md-5 receiver no-padding-left">
-                        <div class="header-container header-receiver">
-                            <img src="images/receiver.jpg"/></img>
-                        </div>
-                        <div class="content-container no-padding-left">
-                            <p class="content-header">Victor at 05:30 pm</p>
-                            <div class="glass-filter">
-                                <p class="content-body">Welcome to WordPress. This is your first post. Edit or delete it, then start writing!!Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p> 
-                            </div>
-                        </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-9 col-md-5 receiver no-padding-left">
-                        <div class="header-container header-receiver">
-                            <img src="images/receiver.jpg"/></img>
-                        </div>
-                        <div class="content-container no-padding-left">
-                            <p class="content-header">Victor at 05:30 pm</p>
-                            <div class="glass-filter">
-                                <p class="content-body">hello!</p> 
-                            </div>
-                        </div>
-                </div> 
-            </div>
-          
-        </div>
-        <div class="container-fluid message-container glass-filter">
-            <div class="row">
-                <div class="col-lg-12 no-padding-right">
-                    <div class="message-input-group">
-                        <span class="message-group-addon">
-                          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                        </span>
-                        <input type="text" class="message-input" placeholder="Enter your message here...">
-                        <span class="message-group-addon">
-                            <!--button class="message-btn" type="button">Send</button-->
-                            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-                        </span>
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
             </div>
         </div>
     </body>
